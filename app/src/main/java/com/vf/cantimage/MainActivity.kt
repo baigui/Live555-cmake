@@ -3,6 +3,7 @@ package com.vf.cantimage
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,8 +11,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var hell = thread { stringFromJNI() }
+        hell.start()
+
         // Example of a call to a native method
-        sample_text.text = stringFromJNI()
     }
 
     /**

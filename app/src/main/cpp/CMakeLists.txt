@@ -4,6 +4,22 @@
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
+add_definitions(
+		-DOMIT_REGISTER_HANDLING
+		-fexceptions
+		-DSOCKLEN_T=socklen_t
+		-DNO_SSTREAM=1
+		-D_LARGEFILE_SOURCE=1
+		-D_FILE_OFFSET_BITS=64
+		-DXLOCALE_NOT_USED
+		-DOMIT_REGISTER_HANDLING
+		-D__arm__
+)
+
+file(GLOB groupsock
+        live/groupsock/*.c
+        live/groupsock/*.cpp
+        )
 
 set(Live_inc
         live/UsageEnvironment
@@ -14,32 +30,34 @@ set(Live_inc
         live/BasicUsageEnvironment/include
         live/groupsock/include
         live/liveMedia/include
+        live/mediaServer
         )
 
+file(GLOB mediaServer
+        live/mediaServer/*.c
+        live/mediaServer/*.cpp
+        )
 file(GLOB BasicUsageEnvironment
         live/BasicUsageEnvironment/*.c
         live/BasicUsageEnvironment/*.cpp
         )
 
 file(GLOB UsageEnvironment
-        ../../../../../../../CrossLib/LiveLib/live/UsageEnvironment/*.c
-        ../../../../../../../CrossLib/LiveLib/live/UsageEnvironment/*.cpp
-        )
-file(GLOB groupsock
-        live/groupsock/*.c
-        live/groupsock/*.cpp
+        live/UsageEnvironment/*.c
+        live/UsageEnvironment/*.cpp
         )
 
 file(GLOB liveMedia
-        live/BasicUsageEnvironment/*.c
-        live/BasicUsageEnvironment/*.cpp
+        live/liveMedia/*.c
+        live/liveMedia/*.cpp
         )
 
 set(LIVE_SRC
+        ${UsageEnvironment}
 		${BasicUsageEnvironment}
-		${UsageEnvironment}
 		${groupsock}
 		${liveMedia}
+		${mediaServer}
 		)
 
 set(VIDEO_SRC
@@ -51,8 +69,6 @@ set(VIDEO_SRC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
-
-
 
 
 find_library(VIDEO_LIB
@@ -70,6 +86,7 @@ add_library(
              SHARED
              ${VIDEO_SRC}
              )
+
 target_include_directories(native-lib PRIVATE
         ${Live_inc}
 		)

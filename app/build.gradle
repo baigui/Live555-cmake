@@ -15,9 +15,12 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
+                arguments '-DANDROID_PLATFORM=android-21'
                 cppFlags ""
+                cppFlags "-std=c++11"
             }
         }
+
     }
     buildTypes {
         release {
