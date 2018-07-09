@@ -17,39 +17,39 @@ add_definitions(
 )
 
 file(GLOB groupsock
-        live/groupsock/*.c
-        live/groupsock/*.cpp
+        live555/groupsock/*.c
+        live555/groupsock/*.cpp
         )
 
 set(Live_inc
-        live/UsageEnvironment
-        live/BasicUsageEnvironment
-        live/groupsock
-        live/liveMedia
-        live/UsageEnvironment/include
-        live/BasicUsageEnvironment/include
-        live/groupsock/include
-        live/liveMedia/include
-        live/mediaServer
+        live555/UsageEnvironment
+        live555/BasicUsageEnvironment
+        live555/groupsock
+        live555/liveMedia
+        live555/UsageEnvironment/include
+        live555/BasicUsageEnvironment/include
+        live555/groupsock/include
+        live555/liveMedia/include
+        live555/mediaServer
         )
 
 file(GLOB mediaServer
-        live/mediaServer/*.c
-        live/mediaServer/*.cpp
+        live555/mediaServer/*.c
+        live555/mediaServer/*.cpp
         )
 file(GLOB BasicUsageEnvironment
-        live/BasicUsageEnvironment/*.c
-        live/BasicUsageEnvironment/*.cpp
+        live555/BasicUsageEnvironment/*.c
+        live555/BasicUsageEnvironment/*.cpp
         )
 
 file(GLOB UsageEnvironment
-        live/UsageEnvironment/*.c
-        live/UsageEnvironment/*.cpp
+        live555/UsageEnvironment/*.c
+        live555/UsageEnvironment/*.cpp
         )
 
 file(GLOB liveMedia
-        live/liveMedia/*.c
-        live/liveMedia/*.cpp
+        live555/liveMedia/*.c
+        live555/liveMedia/*.cpp
         )
 
 set(LIVE_SRC
