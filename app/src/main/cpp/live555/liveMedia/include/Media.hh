@@ -70,7 +70,8 @@ public:
   virtual Boolean isServerMediaSession() const;
 
 protected:
-  friend class MediaLookupTable;
+    //这个类就比较简单，只是用来管理media，也就是特定的文件列表，
+  friend class MediaLookupTable;  //友元所有功能都可以通过java的friend实现，权限只有特定的方法和类可以访问
   Medium(UsageEnvironment& env); // abstract base class
   virtual ~Medium(); // instances are deleted using close() only
 

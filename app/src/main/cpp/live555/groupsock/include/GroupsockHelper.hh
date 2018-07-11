@@ -100,7 +100,7 @@ char const* timestampString();
     var.sin_family = AF_INET;\
     var.sin_addr.s_addr = (adr);\
     var.sin_port = (prt);\
-    SET_SOCKADDR_SIN_LEN(var);
+    SET_SOCKADDR_SIN_LEN(var); //什么也不干
 
 
 // By default, we create sockets with the SO_REUSE_* flag set.

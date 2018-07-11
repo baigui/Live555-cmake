@@ -98,6 +98,7 @@ GenericMediaServer
   ignoreSigPipeOnSocket(fServerSocket); // so that clients on the same host that are killed don't also kill us
   
   // Arrange to handle connections from others:
+  //这个东西是注册处理的地方，taskScheduler。这个是任务管理
   env.taskScheduler().turnOnBackgroundReadHandling(fServerSocket, incomingConnectionHandler, this);
 }
 

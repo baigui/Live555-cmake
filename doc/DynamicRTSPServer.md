@@ -1,0 +1,14 @@
+Medium
+
+GenericMediaServer
+
+RTSPServer
+
+RTSPServerSupportingHTTPStreaming
+
+DynamicRTSPServer
+
+Medium,只是一个把自己注册给env的，可以被env查找，保存一个唯一的id
+
+GenericMediaServer：这个东东好复杂啊，不过貌似这里主要是负责网络先关的注册处理函数，以及
+以及对于各种请求的相应，

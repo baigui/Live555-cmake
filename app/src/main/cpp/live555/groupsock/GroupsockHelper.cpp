@@ -75,6 +75,7 @@ void reclaimGroupsockPriv(UsageEnvironment& env) {
   }
 }
 
+//close on exec 这个机制还是还是很复杂的，这里还是不纠结了。可以简化成returm socket(AF_INET, type, 0);
 static int createSocket(int type) {
   // Call "socket()" to create a (IPv4) socket of the specified type.
   // But also set it to have the 'close on exec' property (if we can)
@@ -224,14 +225,18 @@ int setupStreamSocket(UsageEnvironment& env,
     return -1;
   }
 
+  //理解成 int newSocket = socket(AF_INET, type, 0);
   int newSocket = createSocket(SOCK_STREAM);
   if (newSocket < 0) {
     socketErr(env, "unable to create stream socket: ");
     return newSocket;
   }
 
+  //这里给env设置一下groupsockPriv这个变量的，
   int reuseFlag = groupsockPriv(env)->reuseFlag;
+  //如果是默认值，也就是不设置内容，就给删除，典型的用速度换空间的设计，操蛋
   reclaimGroupsockPriv(env);
+  //这个是设置套接字的一些选项， 这个还是不深究，
   if (setsockopt(newSocket, SOL_SOCKET, SO_REUSEADDR,
 		 (const char*)&reuseFlag, sizeof reuseFlag) < 0) {
     socketErr(env, "setsockopt(SO_REUSEADDR) error: ");
@@ -262,7 +267,12 @@ int setupStreamSocket(UsageEnvironment& env,
 #else
   if (port.num() != 0 || ReceivingInterfaceAddr != INADDR_ANY) {
 #endif
-    MAKE_SOCKADDR_IN(name, ReceivingInterfaceAddr, port.num());
+//    struct sockaddr_in var;
+//    var.sin_family = AF_INET;\
+//    var.sin_addr.s_addr = (adr);\
+//    var.sin_port = (prt);\
+//    SET_SOCKADDR_SIN_LEN(var); //什么也不干
+    MAKE_SOCKADDR_IN(name, ReceivingInterfaceAddr, port.num()); //就吧后面的变量设置给前面，
     if (bind(newSocket, (struct sockaddr*)&name, sizeof name) != 0) {
       char tmpBuffer[100];
       sprintf(tmpBuffer, "bind() error (port number: %d): ",
@@ -276,6 +286,7 @@ int setupStreamSocket(UsageEnvironment& env,
   }
 #endif
 
+  //很好理解、自己猜
   if (makeNonBlocking) {
     if (!makeSocketNonBlocking(newSocket)) {
       socketErr(env, "failed to make non-blocking: ");
